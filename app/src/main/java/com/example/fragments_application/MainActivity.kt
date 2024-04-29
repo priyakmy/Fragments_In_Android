@@ -2,19 +2,36 @@ package com.example.fragments_application
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.viewpager.widget.ViewPager
+import androidx.fragment.app.Fragment
+import com.example.fragments_application.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
 
-        // Set the content of the activity to use the activity_main.xml layout file
-        setContentView(R.layout.activity_main)
-        // Find the view pager that will allow the user to swipe between fragments
-        val viewPager = findViewById<ViewPager>(R.id.viewpager)
-        // Create an adapter that knows which fragment should be shown on each page
-        val adapter = SimpleFragmentPagerAdapter(supportFragmentManager)
-        // Set the adapter onto the view pager
-        viewPager.adapter = adapter
+        setContentView(binding.root)
+
+        binding.btnFragment1.setOnClickListener{
+
+            replaceFragment(Fragment1() )
+
+        }
+
+
+        binding.btnFragment2.setOnClickListener{
+
+            replaceFragment(Fragment2())
+        }
+
     }
+     private fun replaceFragment(fragment: Fragment){
+         val fragmentManager = supportFragmentManager
+         val fragmentTransaction = fragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.fragmentContainer,fragment)
+         fragmentTransaction.commit()
+
+     }
 }
